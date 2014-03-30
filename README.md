@@ -1,5 +1,5 @@
-Crud JDBC
-=========
+Crud Voldemort
+==============
 
 This project provides an implementation of the [Crud API](https://github.com/rickbw/crud-api) for [Project Voldemort](http://www.project-voldemort.com).
 
