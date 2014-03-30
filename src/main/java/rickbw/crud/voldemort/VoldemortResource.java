@@ -17,6 +17,7 @@ package rickbw.crud.voldemort;
 import rickbw.crud.DeletableResource;
 import rickbw.crud.ReadableResource;
 import rickbw.crud.WritableResource;
+import rickbw.crud.pattern.ResourceMerger;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -31,10 +32,14 @@ implements ReadableResource<Versioned<T>>,
            DeletableResource<Boolean> {
 
     private final KeyedStoreClient<?, T> store;
+    private transient ResourceMerger<Versioned<T>, Versioned<T>, Version> merger = null;
 
 
-    /*package*/ static <K, V> VoldemortResource<V> create(final StoreClient<K, V> store, final K key) {
-        return new VoldemortResource<>(new KeyedStoreClient<K, V>(store, key));
+    public ResourceMerger<Versioned<T>, Versioned<T>, Version> merger() {
+        if (this.merger == null) {
+            this.merger = ResourceMerger.withWriter(this, this);
+        }
+        return this.merger;
     }
 
     @Override
@@ -93,6 +98,10 @@ implements ReadableResource<Versioned<T>>,
         });
         // TODO: Subscribe asynchronously?
         return result;
+    }
+
+    /*package*/ static <K, V> VoldemortResource<V> create(final StoreClient<K, V> store, final K key) {
+        return new VoldemortResource<>(new KeyedStoreClient<K, V>(store, key));
     }
 
     private VoldemortResource(final KeyedStoreClient<?, T> store) {
