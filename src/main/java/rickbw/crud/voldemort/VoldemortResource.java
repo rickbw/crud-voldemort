@@ -32,10 +32,10 @@ implements ReadableResource<Versioned<T>>,
            DeletableResource<Boolean> {
 
     private final KeyedStoreClient<?, T> store;
-    private transient ResourceMerger<Versioned<T>, Versioned<T>, Version> merger = null;
+    private transient ResourceMerger<Version> merger = null;
 
 
-    public ResourceMerger<Versioned<T>, Versioned<T>, Version> merger() {
+    public ResourceMerger<Version> merger() {
         if (this.merger == null) {
             this.merger = ResourceMerger.withWriter(this, this);
         }
