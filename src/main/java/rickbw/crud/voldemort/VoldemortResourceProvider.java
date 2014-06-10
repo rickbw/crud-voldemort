@@ -14,9 +14,10 @@
  */
 package rickbw.crud.voldemort;
 
+import java.util.Objects;
+
 import rickbw.crud.ReadableResourceProvider;
 import rickbw.crud.WritableResourceProvider;
-import rickbw.crud.util.Preconditions;
 
 import voldemort.client.StoreClient;
 import voldemort.versioning.Version;
@@ -31,7 +32,7 @@ implements ReadableResourceProvider<K, Versioned<V>>,
 
 
     public VoldemortResourceProvider(final StoreClient<K, V> store) {
-        this.store = Preconditions.checkNotNull(store);
+        this.store = Objects.requireNonNull(store);
     }
 
     @Override

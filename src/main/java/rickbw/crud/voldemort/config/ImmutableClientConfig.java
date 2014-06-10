@@ -19,11 +19,10 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import rickbw.crud.util.Preconditions;
 
 import voldemort.client.ClientConfig;
 import voldemort.client.RoutingTier;
@@ -515,7 +514,7 @@ public class ImmutableClientConfig extends SmartClientConfig {
         private final ClientConfig config;
 
         private Builder(final ClientConfig config) {
-            this.config = Preconditions.checkNotNull(config);
+            this.config = Objects.requireNonNull(config);
         }
 
         public Builder setAsyncJobThreadPoolSize(final int asyncJobThreadPoolSize) {

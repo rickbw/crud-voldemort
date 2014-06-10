@@ -15,9 +15,8 @@
 package rickbw.crud.voldemort.config;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
-import rickbw.crud.util.Preconditions;
 
 import voldemort.client.TimeoutConfig;
 
@@ -83,7 +82,7 @@ public class SmartTimeoutConfig extends TimeoutConfig {
      */
     @Override
     public void setOperationTimeout(final Byte opCode, final long timeoutMs) {
-        Preconditions.checkNotNull(opCode, "null op code");
+        Objects.requireNonNull(opCode, "null op code");
         super.setOperationTimeout(opCode, timeoutMs);
     }
 

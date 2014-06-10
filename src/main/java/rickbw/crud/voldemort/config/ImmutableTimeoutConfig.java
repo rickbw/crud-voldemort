@@ -15,9 +15,8 @@
 package rickbw.crud.voldemort.config;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
-import rickbw.crud.util.Preconditions;
 
 import voldemort.client.TimeoutConfig;
 
@@ -96,7 +95,7 @@ public final class ImmutableTimeoutConfig extends SmartTimeoutConfig {
         }
 
         private Builder(final TimeoutConfig source) {
-            this.config = Preconditions.checkNotNull(source);
+            this.config = Objects.requireNonNull(source);
         }
 
         /**
