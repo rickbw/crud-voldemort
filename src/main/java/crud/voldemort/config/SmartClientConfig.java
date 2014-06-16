@@ -12,7 +12,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package rickbw.crud.voldemort.config;
+package crud.voldemort.config;
 
 import java.io.File;
 import java.util.ArrayList;
