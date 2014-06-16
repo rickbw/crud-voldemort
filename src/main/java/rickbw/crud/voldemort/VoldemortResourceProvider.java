@@ -16,8 +16,8 @@ package rickbw.crud.voldemort;
 
 import java.util.Objects;
 
-import rickbw.crud.ReadableResourceProvider;
-import rickbw.crud.WritableResourceProvider;
+import crud.ReadableResourceProvider;
+import crud.WritableResourceProvider;
 
 import voldemort.client.StoreClient;
 import voldemort.versioning.Version;

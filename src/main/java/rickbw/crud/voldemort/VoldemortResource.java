@@ -14,10 +14,10 @@
  */
 package rickbw.crud.voldemort;
 
-import rickbw.crud.DeletableResource;
-import rickbw.crud.ReadableResource;
-import rickbw.crud.WritableResource;
-import rickbw.crud.pattern.ResourceMerger;
+import crud.DeletableResource;
+import crud.ReadableResource;
+import crud.WritableResource;
+import crud.pattern.ResourceMerger;
 import rx.Observable;
 import rx.Subscriber;
 
