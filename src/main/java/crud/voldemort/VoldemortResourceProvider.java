@@ -36,7 +36,12 @@ implements ReadableProviderSpec<K, Versioned<V>>,
     }
 
     @Override
-    public VoldemortResource<V> get(final K key) {
+    public VoldemortResource<V> reader(final K key) {
+        return VoldemortResource.create(this.store, key);
+    }
+
+    @Override
+    public VoldemortResource<V> writer(final K key) {
         return VoldemortResource.create(this.store, key);
     }
 
