@@ -16,6 +16,10 @@ package crud.voldemort;
 
 import java.util.Objects;
 
+import crud.rsrc.Deletable;
+import crud.rsrc.Readable;
+import crud.rsrc.Writable;
+import crud.spi.DeletableProviderSpec;
 import crud.spi.ReadableProviderSpec;
 import crud.spi.WritableProviderSpec;
 
@@ -26,7 +30,8 @@ import voldemort.versioning.Versioned;
 
 public class VoldemortResourceProvider<K, V>
 implements ReadableProviderSpec<K, Versioned<V>>,
-           WritableProviderSpec<K, Versioned<V>, Version> {
+           WritableProviderSpec<K, Versioned<V>, Version>,
+           DeletableProviderSpec<K, Boolean>{
 
     private final StoreClient<K, V> store;
 
@@ -36,13 +41,18 @@ implements ReadableProviderSpec<K, Versioned<V>>,
     }
 
     @Override
-    public VoldemortResource<V> reader(final K key) {
-        return VoldemortResource.create(this.store, key);
+    public Readable<Versioned<V>> reader(final K key) {
+        return Readable.from(VoldemortResource.create(this.store, key));
     }
 
     @Override
-    public VoldemortResource<V> writer(final K key) {
-        return VoldemortResource.create(this.store, key);
+    public Writable<Versioned<V>, Version> writer(final K key) {
+        return Writable.from(VoldemortResource.create(this.store, key));
+    }
+
+    @Override
+    public Deletable<Boolean> deleter(final K key) {
+        return Deletable.from(VoldemortResource.create(this.store, key));
     }
 
 }
