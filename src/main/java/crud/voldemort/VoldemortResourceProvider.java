@@ -16,8 +16,8 @@ package crud.voldemort;
 
 import java.util.Objects;
 
-import crud.spi.ReadableResourceProvider;
-import crud.spi.WritableResourceProvider;
+import crud.spi.ReadableProviderSpec;
+import crud.spi.WritableProviderSpec;
 
 import voldemort.client.StoreClient;
 import voldemort.versioning.Version;
@@ -25,8 +25,8 @@ import voldemort.versioning.Versioned;
 
 
 public class VoldemortResourceProvider<K, V>
-implements ReadableResourceProvider<K, Versioned<V>>,
-           WritableResourceProvider<K, Versioned<V>, Version> {
+implements ReadableProviderSpec<K, Versioned<V>>,
+           WritableProviderSpec<K, Versioned<V>, Version> {
 
     private final StoreClient<K, V> store;
 

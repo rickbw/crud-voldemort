@@ -15,9 +15,9 @@
 package crud.voldemort;
 
 import crud.pattern.ResourceMerger;
-import crud.spi.DeletableResource;
-import crud.spi.ReadableResource;
-import crud.spi.WritableResource;
+import crud.spi.DeletableSpec;
+import crud.spi.ReadableSpec;
+import crud.spi.WritableSpec;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -27,9 +27,9 @@ import voldemort.versioning.Versioned;
 
 
 public class VoldemortResource<T>
-implements ReadableResource<Versioned<T>>,
-           WritableResource<Versioned<T>, Version>,
-           DeletableResource<Boolean> {
+implements ReadableSpec<Versioned<T>>,
+           WritableSpec<Versioned<T>, Version>,
+           DeletableSpec<Boolean> {
 
     private final KeyedStoreClient<?, T> store;
     private transient ResourceMerger<Version> merger = null;
