@@ -16,8 +16,8 @@ package crud.voldemort;
 
 import java.util.Objects;
 
-import crud.ReadableResourceProvider;
-import crud.WritableResourceProvider;
+import crud.spi.ReadableResourceProvider;
+import crud.spi.WritableResourceProvider;
 
 import voldemort.client.StoreClient;
 import voldemort.versioning.Version;
