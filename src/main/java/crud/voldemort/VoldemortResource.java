@@ -16,8 +16,8 @@ package crud.voldemort;
 
 import crud.pattern.ResourceMerger;
 import crud.spi.DeletableSpec;
-import crud.spi.ReadableSpec;
-import crud.spi.WritableSpec;
+import crud.spi.GettableSpec;
+import crud.spi.SettableSpec;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -27,8 +27,8 @@ import voldemort.versioning.Versioned;
 
 
 public class VoldemortResource<T>
-implements ReadableSpec<Versioned<T>>,
-           WritableSpec<Versioned<T>, Version>,
+implements GettableSpec<Versioned<T>>,
+           SettableSpec<Versioned<T>, Version>,
            DeletableSpec<Boolean> {
 
     private final KeyedStoreClient<?, T> store;
@@ -61,7 +61,7 @@ implements ReadableSpec<Versioned<T>>,
     }
 
     @Override
-    public Observable<Version> write(final Versioned<T> newValue) {
+    public Observable<Version> set(final Versioned<T> newValue) {
         final Observable<Version> result = Observable.create(new Observable.OnSubscribe<Version>() {
             @Override
             public void call(final Subscriber<? super Version> subscriber) {

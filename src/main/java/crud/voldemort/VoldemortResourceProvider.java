@@ -17,11 +17,11 @@ package crud.voldemort;
 import java.util.Objects;
 
 import crud.rsrc.Deletable;
-import crud.rsrc.Readable;
-import crud.rsrc.Writable;
+import crud.rsrc.Gettable;
+import crud.rsrc.Settable;
 import crud.spi.DeletableProviderSpec;
-import crud.spi.ReadableProviderSpec;
-import crud.spi.WritableProviderSpec;
+import crud.spi.GettableProviderSpec;
+import crud.spi.SettableProviderSpec;
 
 import voldemort.client.StoreClient;
 import voldemort.versioning.Version;
@@ -29,8 +29,8 @@ import voldemort.versioning.Versioned;
 
 
 public class VoldemortResourceProvider<K, V>
-implements ReadableProviderSpec<K, Versioned<V>>,
-           WritableProviderSpec<K, Versioned<V>, Version>,
+implements GettableProviderSpec<K, Versioned<V>>,
+           SettableProviderSpec<K, Versioned<V>, Version>,
            DeletableProviderSpec<K, Boolean>{
 
     private final StoreClient<K, V> store;
@@ -41,13 +41,13 @@ implements ReadableProviderSpec<K, Versioned<V>>,
     }
 
     @Override
-    public Readable<Versioned<V>> reader(final K key) {
-        return Readable.from(VoldemortResource.create(this.store, key));
+    public Gettable<Versioned<V>> getter(final K key) {
+        return Gettable.from(VoldemortResource.create(this.store, key));
     }
 
     @Override
-    public Writable<Versioned<V>, Version> writer(final K key) {
-        return Writable.from(VoldemortResource.create(this.store, key));
+    public Settable<Versioned<V>, Version> setter(final K key) {
+        return Settable.from(VoldemortResource.create(this.store, key));
     }
 
     @Override
