@@ -19,6 +19,7 @@ import crud.spi.DeletableSpec;
 import crud.spi.GettableSpec;
 import crud.spi.SettableSpec;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 
 import voldemort.client.StoreClient;
@@ -61,20 +62,36 @@ implements GettableSpec<Versioned<T>>,
     }
 
     @Override
-    public Observable<Version> set(final Versioned<T> newValue) {
+    public Observable<Version> set(final Observable<? extends Versioned<T>> newValues) {
         final Observable<Version> result = Observable.create(new Observable.OnSubscribe<Version>() {
             @Override
             public void call(final Subscriber<? super Version> subscriber) {
-                try {
-                    /* TODO: Provide variant that forces in-order writes by
-                     * reading current value and writing another.
-                     */
-                    final Version version = store.put(newValue);
-                    subscriber.onNext(version);
-                    subscriber.onCompleted();
-                } catch (final Throwable error) {
-                    subscriber.onError(error);
-                }
+                newValues.subscribe(new Observer<Versioned<T>>() {
+                    @Override
+                    public void onNext(final Versioned<T> value) {
+                        if (!subscriber.isUnsubscribed()) {
+                            /* TODO: Provide variant that forces in-order writes by
+                             * reading current value and writing another.
+                             */
+                            final Version version = store.put(value);
+                            subscriber.onNext(version);
+                        }
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onCompleted();
+                        }
+                    }
+                });
             }
         });
         // TODO: Subscribe asynchronously?
