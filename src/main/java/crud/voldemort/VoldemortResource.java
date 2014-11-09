@@ -62,7 +62,7 @@ implements GettableSpec<Versioned<T>>,
     }
 
     @Override
-    public Observable<Version> set(final Observable<? extends Versioned<T>> newValues) {
+    public Observable<Version> set(final Observable<Versioned<T>> newValues) {
         final Observable<Version> result = Observable.create(new Observable.OnSubscribe<Version>() {
             @Override
             public void call(final Subscriber<? super Version> subscriber) {
