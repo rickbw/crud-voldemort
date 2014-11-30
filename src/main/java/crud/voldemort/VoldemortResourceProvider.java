@@ -19,9 +19,9 @@ import java.util.Objects;
 import crud.rsrc.Deletable;
 import crud.rsrc.Gettable;
 import crud.rsrc.Settable;
-import crud.spi.DeletableProviderSpec;
-import crud.spi.GettableProviderSpec;
-import crud.spi.SettableProviderSpec;
+import crud.spi.DeletableSetSpec;
+import crud.spi.GettableSetSpec;
+import crud.spi.SettableSetSpec;
 
 import voldemort.client.StoreClient;
 import voldemort.versioning.Version;
@@ -29,9 +29,9 @@ import voldemort.versioning.Versioned;
 
 
 public class VoldemortResourceProvider<K, V>
-implements GettableProviderSpec<K, Versioned<V>>,
-           SettableProviderSpec<K, Versioned<V>, Version>,
-           DeletableProviderSpec<K, Boolean>{
+implements GettableSetSpec<K, Versioned<V>>,
+           SettableSetSpec<K, Versioned<V>, Version>,
+           DeletableSetSpec<K, Boolean>{
 
     private final StoreClient<K, V> store;
 
